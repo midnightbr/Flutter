@@ -1,5 +1,4 @@
-// import 'package:flutter/cupertino.dart';
-import 'package:bytebank/screens/transferencia/lista.dart';
+import 'package:bytebank/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,7 +11,7 @@ class BytebankApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: Colors.deepPurple,
+          primarySwatch: Colors.lightBlue,
         ).copyWith(
           secondary: Colors.indigoAccent[400],
         ),
@@ -20,7 +19,7 @@ class BytebankApp extends StatelessWidget {
             buttonColor: Colors.deepPurpleAccent[400],
             textTheme: ButtonTextTheme.primary),
       ),
-      home: ListaTransferencias(),
+      home: DashBoard(),
     );
   }
 }
