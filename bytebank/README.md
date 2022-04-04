@@ -1,16 +1,13 @@
 # bytebank
 
-Projeto desenvolvido no curso da alura
+Projeto desenvolvido no curso da Alura sobre Flutter básico.
 
-## Getting Started
+Nesse caso foi feito um projeto base, no qual tem como objetivo listar as transferências que
+o usuário deseja fazer.
 
-This project is a starting point for a Flutter application.
+Para o desenvolvimento, foram utilizado métodos que são considerados como boa prática
+dentro da programação, fazendo assim com que o código seja o mais organizado
+possível. 
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Como foi um curso introdutório, o app não tem nenhuma funcionalidade robusta,
+apenas cria e lista as funcionalidades do usuário.
