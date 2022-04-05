@@ -13,10 +13,10 @@ class BytebankApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: Colors.lightBlue,
         ).copyWith(
-          secondary: Colors.indigoAccent[400],
+          secondary: Colors.blue[700],
         ),
         buttonTheme: ButtonThemeData(
-            buttonColor: Colors.deepPurpleAccent[400],
+            buttonColor: Colors.blue[700],
             textTheme: ButtonTextTheme.primary),
       ),
       home: DashBoard(),
