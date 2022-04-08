@@ -1,3 +1,4 @@
+import 'package:bytebank/screens/contacts/form.dart';
 import 'package:flutter/material.dart';
 
 class ContactList extends StatelessWidget {
@@ -5,7 +6,10 @@ class ContactList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Contacts'),
+        title: Text(
+          'Contacts',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: ListView(
         children: [
@@ -24,9 +28,19 @@ class ContactList extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context)
+              .push(
+                MaterialPageRoute(
+                  builder: (context) => ContactForm(),
+                ),
+              )
+              .then(
+                (newContact) => debugPrint(newContact.toString()),
+              );
+        },
         child: Icon(
-          Icons.add,
+          Icons.person_add_alt_1,
         ),
       ),
     );
