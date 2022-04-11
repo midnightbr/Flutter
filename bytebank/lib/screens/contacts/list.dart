@@ -4,7 +4,6 @@ import 'package:bytebank/screens/contacts/form.dart';
 import 'package:flutter/material.dart';
 
 class ContactList extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,8 +13,10 @@ class ContactList extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body: FutureBuilder(
-        future: findAllContacts(),
+      body: FutureBuilder<List<Contact>>(
+        initialData: [],
+        future: Future.delayed(Duration(seconds: 0))
+            .then((value) => findAllContacts()),
         builder: (context, snapshot) {
           // Recebendo os dados do bd
           final List<Contact> contacts = snapshot.data as List<Contact>;
