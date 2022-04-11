@@ -1,9 +1,9 @@
+import 'package:bytebank/database/app_database.dart';
 import 'package:bytebank/models/contacts.dart';
 import 'package:bytebank/screens/contacts/form.dart';
 import 'package:flutter/material.dart';
 
 class ContactList extends StatelessWidget {
-  final List<Contact> contacts = [];
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +14,21 @@ class ContactList extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body: ListView.builder(
-        itemBuilder: (context, index) {
-          // Recebendo os itens dentro da lista
-          final Contact contact = contacts[index];
-          // Retornando os itens para a classe contactItem para a construção
-          return _ContactItem(contact);
+      body: FutureBuilder(
+        future: findAllContacts(),
+        builder: (context, snapshot) {
+          // Recebendo os dados do bd
+          final List<Contact> contacts = snapshot.data as List<Contact>;
+          return ListView.builder(
+            itemBuilder: (context, index) {
+              // Recebendo os itens dentro da lista
+              final Contact contact = contacts[index];
+              // Retornando os itens para a classe contactItem para a construção
+              return _ContactItem(contact);
+            },
+            itemCount: contacts.length,
+          );
         },
-        itemCount: contacts.length,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
