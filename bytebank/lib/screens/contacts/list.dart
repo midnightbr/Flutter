@@ -18,16 +18,26 @@ class ContactList extends StatelessWidget {
         future: Future.delayed(Duration(seconds: 0))
             .then((value) => findAllContacts()),
         builder: (context, snapshot) {
-          // Recebendo os dados do bd
-          final List<Contact> contacts = snapshot.data as List<Contact>;
-          return ListView.builder(
-            itemBuilder: (context, index) {
-              // Recebendo os itens dentro da lista
-              final Contact contact = contacts[index];
-              // Retornando os itens para a classe contactItem para a construção
-              return _ContactItem(contact);
-            },
-            itemCount: contacts.length,
+            // Recebendo os dados do bd
+            final List<Contact> contacts = snapshot.data as List<Contact>;
+            return ListView.builder(
+              itemBuilder: (context, index) {
+                // Recebendo os itens dentro da lista
+                final Contact contact = contacts[index];
+                // Retornando os itens para a classe contactItem para a construção
+                return _ContactItem(contact);
+              },
+              itemCount: contacts.length,
+            );
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(),
+                Text('Loading')
+              ],
+            ),
           );
         },
       ),
@@ -35,13 +45,13 @@ class ContactList extends StatelessWidget {
         onPressed: () {
           Navigator.of(context)
               .push(
-                MaterialPageRoute(
-                  builder: (context) => ContactForm(),
-                ),
-              )
+            MaterialPageRoute(
+              builder: (context) => ContactForm(),
+            ),
+          )
               .then(
                 (newContact) => debugPrint(newContact.toString()),
-              );
+          );
         },
         child: Icon(
           Icons.person_add_alt_1,
