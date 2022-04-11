@@ -55,7 +55,7 @@ class FormularioTransferenciaState extends State<FormularioTransferencia> {
         int.tryParse(_controladorCampoNumberAccount.text);
     final double? value = double.tryParse(_controladorCampoValue.text);
     if (numberAccount != null && value != null) {
-      final transferenciaCriada = Transferencia(value, numberAccount);
+      final transferenciaCriada = Transferencia(value, numberAccount, 0);
       Navigator.pop(context, transferenciaCriada);
     }
   }
