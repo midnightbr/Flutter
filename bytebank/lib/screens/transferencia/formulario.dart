@@ -1,21 +1,20 @@
 import 'package:bytebank/components/editor.dart';
+import 'package:bytebank/database/app_database.dart';
 import 'package:bytebank/models/transferencia.dart';
 import 'package:flutter/material.dart';
 
 // Atributos constantes
-const _tituloAppBar = 'Criando Transferência';
-const _rotuloConta = 'Número da conta';
+const _tituloAppBar = 'New Transfer';
+const _rotuloConta = 'Number Account';
 const _dicaConta = '0000';
-const _rotuloValor = 'Valor';
+const _rotuloValor = 'Value';
 const _dicaValor = '00.00';
-const _buttonTexto = 'Confirmar';
+const _buttonTexto = 'Confirm';
 
 
 class FormularioTransferencia extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return FormularioTransferenciaState();
-  }
+  State<StatefulWidget> createState() => FormularioTransferenciaState();
 }
 
 class FormularioTransferenciaState extends State<FormularioTransferencia> {
@@ -56,7 +55,7 @@ class FormularioTransferenciaState extends State<FormularioTransferencia> {
     final double? value = double.tryParse(_controladorCampoValue.text);
     if (numberAccount != null && value != null) {
       final transferenciaCriada = Transferencia(value, numberAccount, 0);
-      Navigator.pop(context, transferenciaCriada);
+      saveTransfer(transferenciaCriada).then((id) => Navigator.pop(context));
     }
   }
 }

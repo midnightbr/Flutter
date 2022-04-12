@@ -21,7 +21,9 @@ Future<Database> createDatabase() {
           'id INTEGER PRIMARY KEY, '
           'value DOUBLE, '
           'account_number INTEGER)');
-    }, version: 1);
+    }, version: 1,
+       // onDowngrade: onDatabaseDowngradeDelete,//-> utilizado para apagar o bd
+    );
   });
 }
 
