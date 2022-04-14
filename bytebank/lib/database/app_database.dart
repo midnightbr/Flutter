@@ -127,7 +127,7 @@ Future<List<Contact>> findAllContacts() async {
 Future<List<Transferencia>> findAllTransfers() async {
   // -> Método com async await (sintaxe sugar)
   final Database db = await getDatabase();
-  final List<Map<String, dynamic>> result = await db.query('tranfers');
+  final List<Map<String, dynamic>> result = await db.query('transfers');
   final List<Transferencia> transfers = [];
   for (Map<String, dynamic> row in result) {
     final Transferencia transfer = Transferencia(
