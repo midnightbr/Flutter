@@ -69,7 +69,7 @@ class TransfersList extends StatelessWidget {
           );
         },
         child: Icon(
-          Icons.person_add_alt_1,
+          Icons.account_balance,
         ),
       ),
     );
