@@ -60,6 +60,26 @@ class ContactDao {
     // });
   }
 
+  Future<int> updateContact(Contact contact) async {
+    final Database db = await getDatabase();
+    final Map<String, dynamic> contactMap = _toMap(contact);
+    return db.update(
+      _tableName,
+      contactMap,
+      where: '$_id = ?',
+      whereArgs: [contact.id],
+    );
+  }
+
+  Future<int> deleteContact(int id) async {
+    final Database db = await getDatabase();
+    return db.delete(
+      _tableName,
+      where: '$_id = ?',
+      whereArgs: [id],
+    );
+  }
+
   Map<String, dynamic> _toMap(Contact contact) {
     final Map<String, dynamic> contactMap = Map();
     contactMap[_name] = contact.name;
@@ -71,7 +91,7 @@ class ContactDao {
     final List<Contact> contacts = [];
     for (Map<String, dynamic> row in result) {
       final Contact contact =
-      Contact(row[_name], row[_accountNumber], row[_id]);
+          Contact(row[_name], row[_accountNumber], row[_id]);
       contacts.add(contact);
     }
     return contacts;

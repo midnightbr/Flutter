@@ -52,6 +52,26 @@ class TransferDao {
     // });
   }
 
+  Future<int> updateTransfer(Transferencia transferencia) async {
+    final Database db = await getDatabase();
+    final Map<String, dynamic> transferMap = _toMap(transferencia);
+    return db.update(
+      _tableName,
+      transferMap,
+      where: '$_id = ?',
+      whereArgs: [transferencia.id],
+    );
+  }
+
+  Future<int> deleteTransfer(int id) async {
+    final Database db = await getDatabase();
+    return db.delete(
+      _tableName,
+      where: '$_id = ?',
+      whereArgs: [id],
+    );
+  }
+
   Map<String, dynamic> _toMap(Transferencia transferencia) {
     final Map<String, dynamic> transferMap = Map();
     transferMap[_value] = transferencia.value;
