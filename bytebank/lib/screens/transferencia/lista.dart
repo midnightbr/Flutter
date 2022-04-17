@@ -1,21 +1,25 @@
-import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/database/dao/transfer_dao.dart';
 import 'package:bytebank/models/transferencia.dart';
 import 'package:bytebank/screens/transferencia/formulario.dart';
 import 'package:flutter/material.dart';
 
+const _tituloAppBar = 'Transfers';
+
 class TransfersList extends StatelessWidget {
+  final TransferDao _dao = TransferDao();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Transfers',
+          _tituloAppBar,
           style: TextStyle(color: Colors.white),
         ),
       ),
       body: FutureBuilder<List<Transferencia>>(
         initialData: [],
-        future: findAllTransfers(),
+        future: _dao.findAllTransfers(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
           /** Significa que o Future ainda não foi executado

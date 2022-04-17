@@ -1,5 +1,5 @@
 import 'package:bytebank/components/editor.dart';
-import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/database/dao/transfer_dao.dart';
 import 'package:bytebank/models/transferencia.dart';
 import 'package:flutter/material.dart';
 
@@ -50,12 +50,13 @@ class FormularioTransferenciaState extends State<FormularioTransferencia> {
   }
 
   void _criaTransferencia(BuildContext context) {
+    final TransferDao _dao = TransferDao();
     final int? numberAccount =
         int.tryParse(_controladorCampoNumberAccount.text);
     final double? value = double.tryParse(_controladorCampoValue.text);
     if (numberAccount != null && value != null) {
       final transferenciaCriada = Transferencia(value, numberAccount, 0);
-      saveTransfer(transferenciaCriada).then((id) => Navigator.pop(context));
+      _dao.saveTransfer(transferenciaCriada).then((id) => Navigator.pop(context));
     }
   }
 }

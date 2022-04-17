@@ -1,21 +1,25 @@
-import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/database/dao/contact_dao.dart';
 import 'package:bytebank/models/contacts.dart';
 import 'package:bytebank/screens/contacts/form.dart';
 import 'package:flutter/material.dart';
 
+const _tituloAppBar = 'Contacts';
+
 class ContactList extends StatelessWidget {
+  final ContactDao _dao = ContactDao();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Contacts',
+          _tituloAppBar,
           style: TextStyle(color: Colors.white),
         ),
       ),
       body: FutureBuilder<List<Contact>>(
         initialData: [],
-        future: findAllContacts(),
+        future: _dao.findAllContacts(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             /** Significa que o Future ainda não foi executado

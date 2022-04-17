@@ -1,6 +1,12 @@
-import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/database/dao/contact_dao.dart';
 import 'package:bytebank/models/contacts.dart';
 import 'package:flutter/material.dart';
+
+// Atributos constantes
+const _tituloAppBar = 'New contact';
+const _rotuloContact = 'Full name';
+const _rotuloAccount = 'Account number';
+const _button = 'Create';
 
 class ContactForm extends StatefulWidget {
   @override
@@ -9,16 +15,17 @@ class ContactForm extends StatefulWidget {
 
 class _ContactFormState extends State<ContactForm> {
   final TextEditingController _nameController = TextEditingController();
-
   final TextEditingController _accountNumberController =
       TextEditingController();
+  final ContactDao _dao = ContactDao();
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'New contact',
+          _tituloAppBar,
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -29,7 +36,7 @@ class _ContactFormState extends State<ContactForm> {
             TextField(
               controller: _nameController,
               decoration: InputDecoration(
-                labelText: 'Full name',
+                labelText: _rotuloContact,
               ),
               style: TextStyle(
                 fontSize: 24.0,
@@ -40,7 +47,7 @@ class _ContactFormState extends State<ContactForm> {
               child: TextField(
                 controller: _accountNumberController,
                 decoration: InputDecoration(
-                  labelText: 'Account number',
+                  labelText: _rotuloAccount,
                 ),
                 style: TextStyle(fontSize: 24.0),
                 keyboardType: TextInputType.number,
@@ -56,11 +63,11 @@ class _ContactFormState extends State<ContactForm> {
                     final int? numberAccount =
                         int.tryParse(_accountNumberController.text);
                     final Contact newContact = Contact(name, numberAccount!, 0);
-                    saveContact(newContact)
+                    _dao.saveContact(newContact)
                         .then((id) => Navigator.pop(context));
                   },
                   child: Text(
-                    'Create',
+                    _button,
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
