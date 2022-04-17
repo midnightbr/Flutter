@@ -22,77 +22,83 @@ class DashBoard extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Image.asset('images/bytebank_logo.png'),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            // Para adicionar propriedades de eventos que não são nativas do widget
-            child: Material(
-              color: Theme.of(context).primaryColor,
-              child: InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => ContactList(),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                // Para adicionar propriedades de eventos que não são nativas do widget
+                child: Material(
+                  color: Theme.of(context).primaryColor,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ContactList(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(8.0),
+                      height: 100,
+                      width: 120,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.people,
+                            color: Colors.white,
+                            size: 24.00,
+                          ),
+                          Text(
+                            'Contacts',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 16.0),
+                          ),
+                        ],
+                      ),
                     ),
-                  );
-                },
-                child: Container(
-                  padding: EdgeInsets.all(8.0),
-                  height: 100,
-                  width: 120,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.people,
-                        color: Colors.white,
-                        size: 24.00,
-                      ),
-                      Text(
-                        'Contacts',
-                        style: TextStyle(color: Colors.white, fontSize: 16.0),
-                      ),
-                    ],
                   ),
                 ),
               ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            // Para adicionar propriedades de eventos que não são nativas do widget
-            child: Material(
-              color: Theme.of(context).primaryColor,
-              child: InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => TransfersList(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                // Para adicionar propriedades de eventos que não são nativas do widget
+                child: Material(
+                  color: Theme.of(context).primaryColor,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => TransfersList(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(8.0),
+                      height: 100,
+                      width: 120,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.monetization_on,
+                            color: Colors.white,
+                            size: 24.00,
+                          ),
+                          Text(
+                            'Transfers',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 16.0),
+                          ),
+                        ],
+                      ),
                     ),
-                  );
-                },
-                child: Container(
-                  padding: EdgeInsets.all(8.0),
-                  height: 100,
-                  width: 120,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.monetization_on,
-                        color: Colors.white,
-                        size: 24.00,
-                      ),
-                      Text(
-                        'Transfers',
-                        style: TextStyle(color: Colors.white, fontSize: 16.0),
-                      ),
-                    ],
                   ),
                 ),
               ),
-            ),
+            ],
           ),
         ],
       ),
