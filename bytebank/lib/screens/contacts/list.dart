@@ -5,7 +5,12 @@ import 'package:flutter/material.dart';
 
 const _tituloAppBar = 'Contacts';
 
-class ContactList extends StatelessWidget {
+class ContactList extends StatefulWidget {
+  @override
+  State<ContactList> createState() => _ContactListState();
+}
+
+class _ContactListState extends State<ContactList> {
   final ContactDao _dao = ContactDao();
 
   @override
@@ -70,7 +75,7 @@ class ContactList extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => ContactForm(),
             ),
-          );
+          ).then((value) => setState(() {}));
         },
         child: Icon(
           Icons.person_add_alt_1,

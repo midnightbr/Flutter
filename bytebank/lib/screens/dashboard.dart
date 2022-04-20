@@ -20,87 +20,103 @@ class DashBoard extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Image.asset('images/bytebank_logo.png'),
+            child: Image.asset(
+              'images/bytebank_logo.png',
+            ),
           ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                // Para adicionar propriedades de eventos que não são nativas do widget
-                child: Material(
-                  color: Theme.of(context).primaryColor,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ContactList(),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(8.0),
-                      height: 100,
-                      width: 120,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.people,
-                            color: Colors.white,
-                            size: 24.00,
-                          ),
-                          Text(
-                            'Contacts',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 16.0),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                _FeatureItem(
+                  'Contact',
+                  Icons.people,
+                  onClick: () {
+                    _showContactsList(context);
+                  },
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                // Para adicionar propriedades de eventos que não são nativas do widget
-                child: Material(
-                  color: Theme.of(context).primaryColor,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => TransfersList(),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(8.0),
-                      height: 100,
-                      width: 120,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.monetization_on,
-                            color: Colors.white,
-                            size: 24.00,
-                          ),
-                          Text(
-                            'Transfers',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 16.0),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                _FeatureItem(
+                  'Transfer',
+                  Icons.monetization_on,
+                  onClick: () {
+                    _showContactsList(context);
+                  },
                 ),
-              ),
-            ],
+                _FeatureItem(
+                  'Transaction Feed',
+                  Icons.description,
+                  onClick: () {
+                    _showTransfersList(context);
+                  },
+                ),
+              ],
+            ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _showContactsList(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ContactList(),
+      ),
+    );
+  }
+
+  void _showTransfersList(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => TransfersList(),
+      ),
+    );
+  }
+}
+
+class _FeatureItem extends StatelessWidget {
+  final String name;
+  final IconData icon;
+  final Function onClick;
+
+  _FeatureItem(
+    this.name,
+    this.icon, {
+    required this.onClick,
+  })  : assert(icon != null),
+        assert(onClick != null);
+  // Com o assert, não sera mais aceito valores nulos
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      // Para adicionar propriedades de eventos que não são nativas do widget
+      child: Material(
+        color: Theme.of(context).primaryColor,
+        child: InkWell(
+          onTap: () => onClick(),
+          child: Container(
+            padding: EdgeInsets.all(8.0),
+            height: 100,
+            width: 120,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  icon,
+                  color: Colors.white,
+                  size: 24.00,
+                ),
+                Text(
+                  name,
+                  style: TextStyle(color: Colors.white, fontSize: 16.0),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
