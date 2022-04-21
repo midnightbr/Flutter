@@ -1,5 +1,7 @@
 import 'package:bytebank/screens/contacts/list.dart';
-import 'package:bytebank/screens/transferencia/lista.dart';
+import 'package:bytebank/screens/contacts/list_add.dart';
+// import 'package:bytebank/screens/transferencia/lista.dart';
+import 'package:bytebank/screens/transferencia/transactions_list.dart';
 import 'package:flutter/material.dart';
 
 class DashBoard extends StatelessWidget {
@@ -32,7 +34,7 @@ class DashBoard extends StatelessWidget {
                   'Contact',
                   Icons.people,
                   onClick: () {
-                    _showContactsList(context);
+                    _showContactsAdd(context);
                   },
                 ),
                 _FeatureItem(
@@ -65,10 +67,18 @@ class DashBoard extends StatelessWidget {
     );
   }
 
+  void _showContactsAdd(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ContactListAdd(),
+      ),
+    );
+  }
+
   void _showTransfersList(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => TransfersList(),
+        builder: (context) => TransactionsList(),
       ),
     );
   }

@@ -1,15 +1,16 @@
 import 'package:bytebank/database/dao/contact_dao.dart';
 import 'package:bytebank/models/contacts.dart';
+import 'package:bytebank/screens/contacts/form.dart';
 import 'package:flutter/material.dart';
 
 const _tituloAppBar = 'Contacts';
 
-class ContactList extends StatefulWidget {
+class ContactListAdd extends StatefulWidget {
   @override
-  State<ContactList> createState() => _ContactListState();
+  State<ContactListAdd> createState() => _ContactListAddState();
 }
 
-class _ContactListState extends State<ContactList> {
+class _ContactListAddState extends State<ContactListAdd> {
   final ContactDao _dao = ContactDao();
 
   @override
@@ -26,13 +27,13 @@ class _ContactListState extends State<ContactList> {
         future: _dao.findAllContacts(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
-            /** Significa que o Future ainda não foi executado
+          /** Significa que o Future ainda não foi executado
            * Nesse caso é adicionado algum widget que quando acionado inicia
            * a Future para que saia desse estado
            */
             case ConnectionState.none:
               break;
-            // Quando os dados ainda estão sendo carregados
+          // Quando os dados ainda estão sendo carregados
             case ConnectionState.waiting:
               return Center(
                 child: Column(
@@ -41,14 +42,14 @@ class _ContactListState extends State<ContactList> {
                   children: [CircularProgressIndicator(), Text('Loading')],
                 ),
               );
-            /**
+          /**
            * Esse estado significa que ele tem um dado disponivel, mais a Future
            * ainda não foi finalizada. Conhecida como strin
            */
             case ConnectionState.active:
               break;
             case ConnectionState.done:
-              // Recebendo os dados do bd
+            // Recebendo os dados do bd
               final List<Contact> contacts = snapshot.data as List<Contact>;
               return ListView.builder(
                 itemBuilder: (context, index) {
@@ -67,6 +68,18 @@ class _ContactListState extends State<ContactList> {
            */
           return Text('Unknown error');
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ContactForm(),
+            ),
+          ).then((value) => setState(() {}));
+        },
+        child: Icon(
+          Icons.person_add_alt_1,
+        ),
       ),
     );
   }

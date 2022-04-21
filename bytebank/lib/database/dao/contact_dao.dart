@@ -83,7 +83,7 @@ class ContactDao {
   Map<String, dynamic> _toMap(Contact contact) {
     final Map<String, dynamic> contactMap = Map();
     contactMap[_name] = contact.name;
-    contactMap[_accountNumber] = contact.numberAccount;
+    contactMap[_accountNumber] = contact.accountNumber;
     return contactMap;
   }
 
