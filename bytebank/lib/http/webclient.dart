@@ -25,14 +25,17 @@ class LoggingInterceptor implements InterceptorContract {
   }
 }
 
+const String urlBase = '192.168.1.7:8080';
+
+final Client client = InterceptedClient.build(interceptors: [
+  LoggingInterceptor(),
+]);
+
 Future<List<Transaction>> findAllTransaction() async {
-  Client client = InterceptedClient.build(interceptors: [
-    LoggingInterceptor(),
-  ]);
   // Chamando o get e atribuindo o valor a uma variavel
-  final Response response =
-      await client.get(Uri.http('192.168.1.7:8080', 'transactions'))
-          .timeout(Duration(seconds: 10));
+  final Response response = await client
+      .get(Uri.http(urlBase, 'transactions'))
+      .timeout(Duration(seconds: 10));
   // Convertendo de json
   final List<dynamic> decodeJson = jsonDecode(response.body);
   // Lista de transações
@@ -42,7 +45,7 @@ Future<List<Transaction>> findAllTransaction() async {
     /**
      * Ao inves de transactionJson['contact']['name'], basta criar essa variavel
      * que toda vez que for chamada, ela dara acesso ao atributo contact da lista
-      */
+     */
     final Map<String, dynamic> contactJson = transactionJson['contact'];
     // Criando uma transferencia
     final Transaction transaction = Transaction(
@@ -60,4 +63,36 @@ Future<List<Transaction>> findAllTransaction() async {
     transactions.add(transaction);
   }
   return transactions;
+}
+
+Future<Transaction> saveTransfer(Transaction transaction) async {
+  // Mapeando objetos para converter para json
+  final Map<String, dynamic> transactionMap = {
+    'value': transaction.value,
+    'contact': {
+      'name': transaction.contact.name,
+      'accountNumber': transaction.contact.accountNumber
+    }
+  };
+
+  // Convertendo objetos para json
+  final String transactionJson = jsonEncode(transactionMap);
+
+  final Response response = await client.post(
+    Uri.http(urlBase, 'transactions'),
+    headers: {
+      'Content-type': 'application/json',
+      'password': '1000',
+    },
+    body: transactionJson,
+  );
+
+  // Pegando o response (retorno) do post
+  Map<String, dynamic> json = jsonDecode(response.body);
+  final Map<String, dynamic> contactJson = json['contact'];
+  return Transaction(json['value'], Contact(
+    contactJson['name'],
+    contactJson['accountNumber'],
+    0
+  ));
 }
