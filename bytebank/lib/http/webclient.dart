@@ -31,7 +31,8 @@ Future<List<Transaction>> findAllTransaction() async {
   ]);
   // Chamando o get e atribuindo o valor a uma variavel
   final Response response =
-      await client.get(Uri.http('192.168.1.7:8080', 'transactions'));
+      await client.get(Uri.http('192.168.1.7:8080', 'transactions'))
+          .timeout(Duration(seconds: 10));
   // Convertendo de json
   final List<dynamic> decodeJson = jsonDecode(response.body);
   // Lista de transações
