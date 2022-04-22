@@ -1,3 +1,4 @@
+import 'package:bytebank/components/progress.dart';
 import 'package:bytebank/database/dao/contact_dao.dart';
 import 'package:bytebank/models/contacts.dart';
 import 'package:flutter/material.dart';
@@ -34,13 +35,7 @@ class _ContactListState extends State<ContactList> {
               break;
             // Quando os dados ainda estão sendo carregados
             case ConnectionState.waiting:
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [CircularProgressIndicator(), Text('Loading')],
-                ),
-              );
+              return Progress();
             /**
            * Esse estado significa que ele tem um dado disponivel, mais a Future
            * ainda não foi finalizada. Conhecida como strin

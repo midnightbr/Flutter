@@ -1,6 +1,6 @@
 import 'package:bytebank/database/dao/transfer_dao.dart';
 import 'package:bytebank/models/transferencia.dart';
-// import 'package:bytebank/screens/transferencia/formulario.dart';
+import 'package:bytebank/screens/transferencia/formulario.dart';
 import 'package:flutter/material.dart';
 
 const _tituloAppBar = 'Transfers';
@@ -70,18 +70,18 @@ class _TransfersListState extends State<TransfersList> {
           return Text('Unknown error');
         },
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Navigator.of(context).push(
-      //       MaterialPageRoute(
-      //         builder: (context) => FormularioTransferencia(),
-      //       ),
-      //     ).then((value) => setState(() {}));
-      //   },
-      //   child: Icon(
-      //     Icons.account_balance,
-      //   ),
-      // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => FormularioTransferencia(),
+            ),
+          ).then((value) => setState(() {}));
+        },
+        child: Icon(
+          Icons.account_balance,
+        ),
+      ),
     );
   }
 }
