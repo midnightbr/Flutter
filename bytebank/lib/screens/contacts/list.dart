@@ -102,6 +102,7 @@ class _ContactItem extends StatelessWidget {
     // Criando a listagem dos itens da lista recebido pelo construtor
     return Card(
       child: ListTile(
+        // Colocando a funcionalidade de um botão (clique) no objeto
         onTap: () => onClick(),
         title: Text(
           contact.name,
