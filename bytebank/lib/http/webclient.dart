@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:bytebank/models/contacts.dart';
 import 'package:bytebank/models/transferencia.dart';
 import 'package:http/http.dart';
@@ -25,7 +24,7 @@ class LoggingInterceptor implements InterceptorContract {
   }
 }
 
-const String urlBase = '192.168.2.187:8080';
+const String urlBase = '192.168.1.7:8080';
 
 final Client client = InterceptedClient.build(interceptors: [
   LoggingInterceptor(),

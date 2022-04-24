@@ -1,6 +1,8 @@
 import 'package:bytebank/components/progress.dart';
 import 'package:bytebank/database/dao/contact_dao.dart';
 import 'package:bytebank/models/contacts.dart';
+import 'package:bytebank/screens/contacts/form.dart';
+import 'package:bytebank/screens/transferencia/formulario.dart';
 import 'package:flutter/material.dart';
 
 const _tituloAppBar = 'Contacts';
@@ -50,7 +52,16 @@ class _ContactListState extends State<ContactList> {
                   // Recebendo os itens dentro da lista
                   final Contact contact = contacts[index];
                   // Retornando os itens para a classe contactItem para a construção
-                  return _ContactItem(contact);
+                  return _ContactItem(
+                    contact,
+                    onClick: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => TransactionForm(contact),
+                        ),
+                      );
+                    },
+                  );
                 },
                 itemCount: contacts.length,
               );
@@ -63,21 +74,35 @@ class _ContactListState extends State<ContactList> {
           return Text('Unknown error');
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ContactForm(),
+            ),
+          ).then((value) => setState(() {}));
+        },
+        child: Icon(
+          Icons.person_add_alt_1,
+        ),
+      ),
     );
   }
 }
 
 class _ContactItem extends StatelessWidget {
   final Contact contact;
+  final Function onClick;
 
   // Recebendo o contato da lista
-  _ContactItem(this.contact);
+  _ContactItem(this.contact, {required this.onClick});
 
   @override
   Widget build(BuildContext context) {
     // Criando a listagem dos itens da lista recebido pelo construtor
     return Card(
       child: ListTile(
+        onTap: () => onClick(),
         title: Text(
           contact.name,
           style: TextStyle(fontSize: 24.0),
