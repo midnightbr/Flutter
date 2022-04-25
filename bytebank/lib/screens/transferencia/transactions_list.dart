@@ -1,20 +1,23 @@
 import 'package:bytebank/components/centered_message.dart';
 import 'package:bytebank/components/progress.dart';
-import 'package:bytebank/http/webclient.dart';
+import 'package:bytebank/http/webclients/transaction_webclient.dart';
 import 'package:bytebank/models/transferencia.dart';
 import 'package:flutter/material.dart';
 
+const String _tituleAppBar = 'Transactions';
+
 class TransactionsList extends StatelessWidget {
   final List<Transaction> transactions = [];
+  final TransactionWebClient _webClient = TransactionWebClient();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Transactions'),
+        title: Text(_tituleAppBar),
       ),
       body: FutureBuilder<List<Transaction>>(
-        future: findAllTransaction(),
+        future: _webClient.findAllTransaction(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:

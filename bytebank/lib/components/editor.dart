@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 
 class Editor extends StatelessWidget {
@@ -16,7 +18,7 @@ class Editor extends StatelessWidget {
       child: TextField(
         // Utilizado para pegar valores digitados pelo usuario
         controller: _controller,
-        style: TextStyle(fontSize: 24.00),
+        style: const TextStyle(fontSize: 24.00),
         decoration: InputDecoration(
             icon: icon != null ? Icon(icon) : null,
             labelText: _rotulo,

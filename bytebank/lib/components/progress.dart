@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 
 class Progress extends StatelessWidget {
@@ -12,7 +14,7 @@ class Progress extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircularProgressIndicator(),
+          const CircularProgressIndicator(),
           Text(message),
         ],
       ),
