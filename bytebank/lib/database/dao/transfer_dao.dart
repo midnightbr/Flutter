@@ -1,5 +1,5 @@
 import 'package:bytebank/database/app_database.dart';
-import 'package:bytebank/models/transferencia.dart';
+import 'package:bytebank/models/transaction.dart';
 import 'package:sqflite/sqflite.dart';
 
 class TransferDao {

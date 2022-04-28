@@ -1,13 +1,13 @@
 import 'package:bytebank/components/centered_message.dart';
 import 'package:bytebank/components/progress.dart';
 import 'package:bytebank/http/webclients/transaction_webclient.dart';
-import 'package:bytebank/models/transferencia.dart';
+import 'package:bytebank/models/transaction.dart';
 import 'package:flutter/material.dart';
 
 const String _tituleAppBar = 'Transactions';
 
 class TransactionsList extends StatelessWidget {
-  final List<Transaction> transactions = [];
+
   final TransactionWebClient _webClient = TransactionWebClient();
 
   @override
@@ -28,8 +28,8 @@ class TransactionsList extends StatelessWidget {
               break;
             case ConnectionState.done:
               if (snapshot.hasData) {
-                final List<Transaction>? transactions = snapshot.data;
-                if (transactions!.isNotEmpty) {
+                final List<Transaction> transactions = snapshot.data as List<Transaction>;
+                if (transactions.isNotEmpty) {
                   return ListView.builder(
                     itemBuilder: (context, index) {
                       final Transaction transaction = transactions[index];

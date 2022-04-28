@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:bytebank/http/webclient.dart';
-import 'package:bytebank/models/transferencia.dart';
+import 'package:bytebank/models/transaction.dart';
 import 'package:http/http.dart';
 
 class TransactionWebClient {
@@ -9,7 +9,7 @@ class TransactionWebClient {
     // Chamando o get e atribuindo o valor a uma variavel
     final Response response = await client
         .get(Uri.http(urlBase, 'transactions'))
-        .timeout(Duration(seconds: 10));
+        .timeout(Duration(seconds: 5));
     // Convertendo de json
     final List<dynamic> decodeJson = jsonDecode(response.body);
     return decodeJson
@@ -17,7 +17,7 @@ class TransactionWebClient {
         .toList();
   }
 
-  Future<Transaction> saveTransfer(Transaction transaction) async {
+  Future<Transaction> saveTransfer(Transaction transaction, String password) async {
     // Convertendo objetos para JSON
     final String transactionJson = jsonEncode(transaction.toJson());
 
@@ -25,7 +25,7 @@ class TransactionWebClient {
       Uri.http(urlBase, 'transactions'),
       headers: {
         'Content-type': 'application/json',
-        'password': '1000',
+        'password': password,
       },
       body: transactionJson,
     );

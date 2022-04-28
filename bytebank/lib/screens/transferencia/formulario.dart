@@ -1,6 +1,7 @@
+import 'package:bytebank/components/transaction_auth_dialog.dart';
 import 'package:bytebank/http/webclients/transaction_webclient.dart';
 import 'package:bytebank/models/contacts.dart';
-import 'package:bytebank/models/transferencia.dart';
+import 'package:bytebank/models/transaction.dart';
 import 'package:flutter/material.dart';
 
 // Atributos constantes
@@ -77,11 +78,15 @@ class TransactionFormState extends State<TransactionForm> {
                         value!,
                         widget.contact,
                       );
-                      _webClient.saveTransfer(transactionCreated).then((transaction) {
-                        if(transaction != null) {
-                          Navigator.pop(context);
-                        }
-                      });
+                      showDialog(
+                          context: context,
+                          builder: (contextDialog) {
+                            return TransactionAuthDialog(
+                              onConfirm: (String password) {
+                                _save(transactionCreated, password, context);
+                              },
+                            );
+                          });
                     },
                     child: Text('Transfer'),
                   ),
@@ -92,5 +97,17 @@ class TransactionFormState extends State<TransactionForm> {
         ),
       ),
     );
+  }
+
+  void _save(
+    Transaction transactionCreated,
+    String password,
+    BuildContext context,
+  ) {
+    _webClient.saveTransfer(transactionCreated, password).then((transaction) {
+      if (transaction != null) {
+        Navigator.pop(context);
+      }
+    });
   }
 }
