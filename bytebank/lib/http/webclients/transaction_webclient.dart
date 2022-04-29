@@ -17,7 +17,8 @@ class TransactionWebClient {
         .toList();
   }
 
-  Future<Transaction> saveTransfer(Transaction transaction, String password) async {
+  Future<Transaction> saveTransfer(
+      Transaction transaction, String password) async {
     // Convertendo objetos para JSON
     final String transactionJson = jsonEncode(transaction.toJson());
 
@@ -30,15 +31,20 @@ class TransactionWebClient {
       body: transactionJson,
     );
 
-    if(response.statusCode == 400){
-      throw Exception('There was an error submitting transaction!');
-    }
-
-    if(response.statusCode == 401) {
-      throw Exception('Authenticator failed!');
+    if (response.statusCode != 200) {
+      _throwHttpError(response.statusCode);
     }
 
     // Pegando o response (retorno) do post
     return Transaction.fromJson(jsonDecode(response.body));
   }
+
+  void _throwHttpError(int statusCode) => throw Exception(
+    _statusCodeResponse[statusCode],
+  );
+
+  static final Map<int, String> _statusCodeResponse = {
+    400: 'There was an error submitting transaction!',
+    401: 'Authenticator failed!'
+  };
 }
