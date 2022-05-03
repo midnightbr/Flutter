@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bytebank/components/response_dialog.dart';
 import 'package:bytebank/components/transaction_auth_dialog.dart';
 import 'package:bytebank/http/webclients/transaction_webclient.dart';
@@ -76,7 +78,7 @@ class TransactionFormState extends State<TransactionForm> {
                         _valueController.text,
                       );
                       final transactionCreated = Transaction(
-                        value!,
+                        value,
                         widget.contact,
                       );
                       showDialog(
@@ -105,19 +107,47 @@ class TransactionFormState extends State<TransactionForm> {
     String password,
     BuildContext context,
   ) async {
-    final Transaction transaction =
-    await _webClient.saveTransfer(transactionCreated, password)
-        .catchError((e) {
-      showDialog(context: context, builder: (contextDialog) {
-        return FailureDialog(e.message);
-      });
-    }, test: (e) => e is Exception);
+    Transaction transaction =
+        await _send(transactionCreated, password, context);
 
+    _showSuccessfulMessage(transaction, context);
+  }
+
+  Future<void> _showSuccessfulMessage(
+      Transaction transaction, BuildContext context) async {
     if (transaction != null) {
-      await showDialog(context: context, builder: (contextDialog) {
-        return SuccessDialog('Successful transaction!');
-      });
-    Navigator.pop(context);
+      await showDialog(
+          context: context,
+          builder: (contextDialog) {
+            return SuccessDialog('Successful transaction!');
+          });
+      Navigator.pop(context);
     }
+  }
+
+  Future<Transaction> _send(Transaction transactionCreated, String password,
+      BuildContext context) async {
+    final Transaction transaction = await _webClient
+        .saveTransfer(transactionCreated, password)
+        .catchError((e) {
+      _showFailureMessage(context,
+          message: 'Timeout submitting the transaction!');
+    }, test: (e) => e is TimeoutException)
+        .catchError((e) {
+      _showFailureMessage(context, message: e.message);
+    }, test: (e) => e is HttpException)
+        .catchError((e) {
+      _showFailureMessage(context);
+    });
+    return transaction;
+  }
+
+  void _showFailureMessage(BuildContext context,
+      {String message = 'Unknown Error'}) {
+    showDialog(
+        context: context,
+        builder: (contextDialog) {
+          return FailureDialog(message);
+        });
   }
 }
