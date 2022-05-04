@@ -6,6 +6,8 @@ import 'package:bytebank/http/webclients/transaction_webclient.dart';
 import 'package:bytebank/models/contacts.dart';
 import 'package:bytebank/models/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
+
 
 // Atributos constantes
 const _tituloAppBar = 'New Transfer';
@@ -22,8 +24,8 @@ class TransactionForm extends StatefulWidget {
 
 class TransactionFormState extends State<TransactionForm> {
   final TransactionWebClient _webClient = TransactionWebClient();
-
   final TextEditingController _valueController = TextEditingController();
+  final String transactionId = Uuid().v4();
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +80,7 @@ class TransactionFormState extends State<TransactionForm> {
                         _valueController.text,
                       );
                       final transactionCreated = Transaction(
+                        transactionId,
                         value,
                         widget.contact,
                       );

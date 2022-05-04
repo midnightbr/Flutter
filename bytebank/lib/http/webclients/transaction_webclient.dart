@@ -21,6 +21,8 @@ class TransactionWebClient {
     // Convertendo objetos para JSON
     final String transactionJson = jsonEncode(transaction.toJson());
 
+    await Future.delayed(Duration(seconds: 10));
+
     final Response response = await client.post(
       Uri.http(urlBase, 'transactions'),
       headers: {
@@ -35,12 +37,22 @@ class TransactionWebClient {
       return Transaction.fromJson(jsonDecode(response.body));
     }
 
-    throw HttpException(_statusCodeResponse[response.statusCode]);
+    throw HttpException(_getMessage(response.statusCode));
+  }
+
+  String? _getMessage(int statusCode) {
+    if (_statusCodeResponse.containsKey(statusCode)) {
+      return _statusCodeResponse[statusCode];
+    }
+    else {
+      return 'Unknown error';
+    }
   }
 
   static final Map<int, String> _statusCodeResponse = {
     400: 'There was an error submitting transaction!',
-    401: 'Authenticator failed!'
+    401: 'Authenticator failed!',
+    409: 'Transaction already exist!'
   };
 }
 
