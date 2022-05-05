@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bytebank/components/progress.dart';
 import 'package:bytebank/components/response_dialog.dart';
 import 'package:bytebank/components/transaction_auth_dialog.dart';
 import 'package:bytebank/http/webclients/transaction_webclient.dart';
@@ -26,6 +27,7 @@ class TransactionFormState extends State<TransactionForm> {
   final TransactionWebClient _webClient = TransactionWebClient();
   final TextEditingController _valueController = TextEditingController();
   final String transactionId = Uuid().v4();
+  bool _sending = false;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,14 @@ class TransactionFormState extends State<TransactionForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              Visibility(
+                // Variavel responsavel para aparição ou não do 'loading'
+                visible: _sending,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Progress(message: 'Sending',),
+                ),
+              ),
               Text(
                 widget.contact.name,
                 style: TextStyle(
@@ -130,6 +140,10 @@ class TransactionFormState extends State<TransactionForm> {
 
   Future<Transaction> _send(Transaction transactionCreated, String password,
       BuildContext context) async {
+    // Alterando o visible para true e mostrando o 'loading'
+    setState(() {
+      _sending = true;
+    });
     final Transaction transaction = await _webClient
         .saveTransfer(transactionCreated, password)
         .catchError((e) {
@@ -141,6 +155,11 @@ class TransactionFormState extends State<TransactionForm> {
     }, test: (e) => e is HttpException)
         .catchError((e) {
       _showFailureMessage(context);
+    }).whenComplete(() {
+      // Após a execução, voltar para false, para esconder o 'loading' na tela
+      setState(() {
+        _sending = false;
+      });
     });
     return transaction;
   }
