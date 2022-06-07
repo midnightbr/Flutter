@@ -66,16 +66,16 @@ class ContactDao {
     return db.update(
       _tableName,
       contactMap,
-      where: '$_id = ?',
+      where: 'id = ?',
       whereArgs: [contact.id],
     );
   }
 
-  Future<int> deleteContact(int id) async {
+  Future<int> deleteContact(int? id) async {
     final Database db = await getDatabase();
     return db.delete(
       _tableName,
-      where: '$_id = ?',
+      where: 'id = ?',
       whereArgs: [id],
     );
   }

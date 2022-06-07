@@ -1,6 +1,7 @@
 import 'package:bytebank/components/progress.dart';
 import 'package:bytebank/database/dao/contact_dao.dart';
 import 'package:bytebank/models/contacts.dart';
+import 'package:bytebank/screens/contacts/alteration.dart';
 import 'package:bytebank/screens/contacts/form.dart';
 import 'package:bytebank/screens/transferencia/formulario.dart';
 import 'package:flutter/material.dart';
@@ -76,11 +77,13 @@ class _ContactListState extends State<ContactList> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => ContactForm(),
-            ),
-          ).then((value) => setState(() {}));
+          Navigator.of(context)
+              .push(
+                MaterialPageRoute(
+                  builder: (context) => ContactForm(),
+                ),
+              )
+              .then((value) => setState(() {}));
         },
         child: Icon(
           Icons.person_add_alt_1,
@@ -93,6 +96,7 @@ class _ContactListState extends State<ContactList> {
 class _ContactItem extends StatelessWidget {
   final Contact contact;
   final Function onClick;
+  final ContactDao _dao = ContactDao();
 
   // Recebendo o contato da lista
   _ContactItem(this.contact, {required this.onClick});
@@ -111,6 +115,44 @@ class _ContactItem extends StatelessWidget {
         subtitle: Text(
           contact.accountNumber.toString(),
           style: TextStyle(fontSize: 16.0),
+        ),
+        trailing: SizedBox(
+          height: 100,
+          width: 100,
+          child: Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AlterationContact(contact),
+                    ),
+                  );
+                },
+                icon: Icon(Icons.edit),
+              ),
+              IconButton(
+                color: Colors.red,
+                onPressed: () {
+                  showDialog(context: context, builder: (deletecontext) => AlertDialog(
+                    title: Text('Excluir Usuario'),
+                    content: Text('Tem certeza?'),
+                    actions: [
+                      ElevatedButton(onPressed: () {
+                        Navigator.of(context).pop();
+                      }, child: Text('Não')),
+                      ElevatedButton(onPressed: () {
+                        _dao.deleteContact(contact.id);
+                        Navigator.of(context).pop();
+                      }, child: Text('Sim'))
+                    ],
+                  ));
+                },
+                icon: Icon(Icons.delete),
+              ),
+            ],
+          ),
         ),
       ),
     );

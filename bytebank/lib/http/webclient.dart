@@ -3,7 +3,7 @@ import 'package:http/http.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 
 // Ocorrera várias alterações de ip, devido ao ip da maquina alterar constatemente
-const String urlBase = '192.168.1.9:8080';
+const String urlBase = '192.168.1.7:8080';
 
 final Client client = InterceptedClient.build(
   interceptors: [
